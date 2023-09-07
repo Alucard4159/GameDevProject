@@ -1,0 +1,88 @@
+#canvas{
+    position:absolute;
+    width:600px;
+    height:300px;
+    z-index:1;
+    border: 10px dashed black;
+  }
+  #minimap{
+    border:10px dashed black;
+    position:absolute;
+    left:620px;
+    width:300px;
+    height:300px;
+  }
+  #screenshot-wrapper{
+    position:absolute;
+    top:365px;
+    border: 10px dashed black;
+    background-color: gray;
+  }
+  #camera{
+    width:100px;
+    position:absolute; 
+    z-index:1;
+    left:505px;
+    top:240px;
+  }
+  #screenshot{
+    background-color: white;
+  }
+  
+  #titleBlock{
+    background-color: gray;
+    position:relative;
+    width: 940px;
+    height:582px;
+  }
+
+  #HUD{
+    background-image: -webkit-linear-gradient(left, #ff0000 0%,#000000 100%);
+    color: white;
+    position:relative;
+    display: flex;
+    align-items: center;
+    width: 940px;
+    height:55px;
+  }
+
+  #HUD p{
+    color: yellow;
+    padding-left: 240px;
+  }
+
+  #instructions{
+    /*background-image: -webkit-repeating-linear-gradient(top, #000000 0%,#ffffff 100%);*/
+    background-image: -webkit-radial-gradient(center, #ff0000 0%,#000000 100%);
+    text-align: center;
+    font-family:'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+    position:absolute;
+    top:375px;
+    left:320px;
+    width: 615px;
+    height: 165px;
+    border: 2px solid black;
+  }
+
+  .nextLevel {
+    display: inherit;
+    position:absolute;
+    top: 535px;
+    width: 911px;
+    height:15px;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    outline: none;
+    background-image:
+        -webkit-linear-gradient(top,#630000 0%,#ff0000 100%);
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+}
+.nextLevel:hover {
+    background-image: none;
+    background-color: #555;
+}
