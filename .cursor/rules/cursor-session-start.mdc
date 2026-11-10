@@ -1,0 +1,40 @@
+---
+description: Read .context/ at session start (bounded — ~5% context budget)
+alwaysApply: true
+---
+
+# Session start (lightweight)
+
+At session start — before the first response — load **bounded** handoff from `.context/`. Do **not** read full history files.
+
+## Required reads (bounded)
+
+1. **`PROJECT_STATE.md`** — **overview only**: through `## Deployment Environments` (~45 lines). Skip long historical / ops sections unless the task needs them.
+2. **`TODO.md`** — **open items only**: blocker and pending sections (skip completed `[x]` sections)
+3. **`RECENT_CHANGES.md`** — **top dated section only** (most recent `## YYYY-MM-DD` through the next `##` or EOF). Never load the full file at session start.
+4. **`WORKSPACE.md`** — **only if present**; declares `WORKSPACE_ROOT` for multi-repo work. Absent in a single-repo project — not read at session start.
+
+## Never auto-read at session start
+
+- `*_ARCHIVE.md`
+- Full `RECENT_CHANGES.md`, `DECISIONS.md`, or `AGENT_LEARNINGS.md`
+- `ARCHITECTURE.md` / `DECISIONS.md` (unless implementing or asking "why")
+- Plugin skill bodies (the tool matches them on description; read one only when it fires)
+
+## Conditional reads
+
+- The matched skill's body **before** deep work — plugin or project
+- `AGENT_LEARNINGS.md` — troubleshooting / recurring failures
+- `ARCHITECTURE.md` / `DECISIONS.md` — structural changes
+- `AGENT_READINESS.md` / `AGENT_WORKFLOWS.md` — smoke, verify, installs
+
+## Exceptions
+
+- `.context/` missing → skip (unbootstrapped)
+- User message is bootstrap/context meta → skip mandatory read
+- User says **"skip context"** → skip for session
+- User says **"read full context"** / **"deep handoff"** → may read unbounded
+
+## Confirmation
+
+One line: `"Read context: <one-sentence summary from PROJECT_STATE overview>."`

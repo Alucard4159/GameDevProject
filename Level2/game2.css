@@ -1,3 +1,10 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #111;
+  overflow: hidden;
+}
+
 #canvas{
     position:absolute;
     width:600px;
@@ -46,9 +53,29 @@
     height:55px;
   }
 
+  #HUD h2{
+    margin: 0;
+  }
+
   #HUD p{
     color: yellow;
+    margin: 0;
+  }
+
+  #HUD .hud-x{
     padding-left: 240px;
+  }
+
+  #HUD .hud-stat{
+    padding-left: 30px;
+  }
+
+  #HUD .hud-value{
+    color: white;
+  }
+
+  #HUD .hud-success{
+    color: red;
   }
 
   #instructions{

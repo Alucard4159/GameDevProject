@@ -1,0 +1,17 @@
+---
+description: Confirm before npm install, docker build/pull, pip/venv, or system package installs.
+alwaysApply: true
+---
+
+# Workstation consent
+
+Confirm with the user before:
+
+- `npm install` / large frontend installs
+- `docker build` / `docker pull`
+- Local `pip install` / venv creation
+- System package installs
+
+Unless they already approved in this chat.
+
+Kiro parity: install consent is covered in project bootstrap; add global Cursor User rules if your org uses them.

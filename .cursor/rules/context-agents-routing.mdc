@@ -1,0 +1,42 @@
+---
+description: Routes work to project skills and Cursor-specific rule content. Plugin skills are discovered natively by Cursor, same as Kiro and Claude Code.
+globs: **/*
+alwaysApply: true
+---
+
+# Routing
+
+**Cursor discovers plugin skills natively**, same as Kiro and Claude Code — Cursor added Agent Skills support in version 2.4 (January 2026), reading the same `SKILL.md`/frontmatter shape. Plugin skills are junction-deployed into `~/.cursor/skills/` by `deploy-cursor.ps1` (mirroring `deploy-kiro.ps1`), so they're referenced **by skill name** here, the same as on Kiro/Claude — not by file path.
+
+**Correction:** this file previously said "Cursor has no native skill support" and routed to hand-generated `.cursor/rules/` files produced by `plugin-export`. That was wrong (checked against Cursor's current docs) and has been corrected — see `context/steering/cross-tool-parity.md` for the full account. What genuinely differs on Cursor is **Rules** (`.mdc`, `.cursor/rules/`), which are a separate, non-portable, always-on/glob-scoped guidance mechanism — Cursor's rough equivalent of Kiro's `steering/` — not a skill-delivery mechanism.
+
+| Root | Path | Use for |
+|---|---|---|
+| **Plugin skills** | discovered natively (junctioned via `deploy-cursor.ps1`) | Plugin workflows — same as Kiro/Claude, referenced by skill name |
+| **Rules** | `.cursor/rules/` | Always-on/glob-scoped project guidance — Cursor's steering equivalent |
+| **Project skills** | `skills/` | Product-specific checklists |
+| **Handoff** | `.context/`, `skills/PLAYBOOKS_BOUNDARY.md` | Facts and boundary |
+
+## Automatic routing (required)
+
+Non-trivial work (troubleshoot, implement, review, deploy, multi-step):
+
+1. Let the matching plugin skill fire by description match, same as on Kiro/Claude — or invoke it by name (`/skill-name`) if it's manual-only (`disable-model-invocation: true`).
+2. Scripts, hooks, CI, Docker, shell, cross-platform → read `.cursor/rules/cross-os-compatibility.mdc` first.
+3. After material work → invoke the `context-closure` skill (fired automatically by the stop hook, or manually if it didn't fire).
+
+Cursor's hook API has **no file-edit event**, so consistency checks only happen at session end via the stop hook. Self-check before finishing rather than relying on a hook to catch it.
+
+## Project skills
+
+Match `skills/README.md`, read `skills/<name>/SKILL.md`. Project skills are **not** junction-deployed (they're product-specific, not canonical plugin content), so Cursor discovers them the same way it discovers any project-level `.cursor/skills/` or repo-root `skills/` directory — confirm your project's skills actually live somewhere Cursor's skill discovery walks (see Cursor's own skill-directory docs) rather than assuming. When you add one, add a row here **and** to the Kiro and Claude routing files if it should be discoverable there too.
+
+**Precedence:** project skills override plugin skills on a naming conflict. Declared overrides go in `skills/PROJECT_STEERING.md`.
+
+## Policies
+
+`.cursor/rules/` — evidence-first, deploy consent, workstation consent.
+
+## Handoff
+
+`.context/PROJECT_STATE.md` → `TODO.md` → `RECENT_CHANGES.md`.

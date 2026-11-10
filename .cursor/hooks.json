@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "python scripts/sync_manual_skill_routing.py"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "python .cursor/hooks/context-file-edit-check.py",
+        "matcher": "Write"
+      }
+    ],
+    "stop": [
+      {
+        "command": "python -u .cursor/hooks/context-closure-stop.py",
+        "loop_limit": 1
+      }
+    ]
+  }
+}

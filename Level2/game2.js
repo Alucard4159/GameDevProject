@@ -1,5 +1,7 @@
 var Game = function(){
     var twoPi = Math.PI * 2;
+    var foregroundSlivers = [];
+    var backgroundSlivers = [];
     var raycaster = {
       init: function(){
         this.maxDistance = Math.sqrt(minimap.cellsAcross * minimap.cellsAcross + minimap.cellsDown * minimap.cellsDown);
@@ -121,11 +123,11 @@ var Game = function(){
 
             if(Math.round(this.x) == 1 && Math.round(this.y) == 1)
             {
-              var HUDHTML = "<h2>Jessie's Maze Deluxe Level 2</h2>";
-              HUDHTML += "<p><span style='color: red'>SUCCESS!</span></p>";
-              HUDHTML += "<p style='padding-left: 30px;'><span style='color: white'>" + "</span></p>";
-              HUDHTML += "<p style='padding-left: 30px;'>Percentage Completed- <span style='color: white'> " + "100%</span></p>";
-              $("#HUD").html(HUDHTML);
+              setHud("Jessie's Maze Deluxe Level 2", [
+                { className: "hud-x", value: "SUCCESS!", valueClass: "hud-success" },
+                { className: "hud-stat", value: "" },
+                { className: "hud-stat", label: "Percentage Completed- ", value: " 100%" }
+              ]);
             }
             else
             {            
@@ -137,11 +139,11 @@ var Game = function(){
               percentComplete = percentComplete / compCheck;
               percentComplete = percentComplete * 100;
               percentComplete = 100 - percentComplete;
-              var HUDHTML = "<h2>Jessie's Maze Deluxe Level 2</h2>";
-              HUDHTML += "<p>Player.X- <span style='color: white'>" + Math.ceil(this.x) + "</span></p>";
-              HUDHTML += "<p style='padding-left: 30px;'>Player.Y- <span style='color: white'>" + Math.ceil(this.y) + "</span></p>";
-              HUDHTML += "<p style='padding-left: 30px;'>Percentage Completed- <span style='color: white'>" + Math.ceil(percentComplete) + "%</span></p>";
-              $("#HUD").html(HUDHTML);
+              setHud("Jessie's Maze Deluxe Level 2", [
+                { className: "hud-x", label: "Player.X- ", value: String(Math.ceil(this.x)) },
+                { className: "hud-stat", label: "Player.Y- ", value: String(Math.ceil(this.y)) },
+                { className: "hud-stat", label: "Percentage Completed- ", value: Math.ceil(percentComplete) + "%" }
+              ]);
 
             }
             
@@ -161,8 +163,50 @@ var Game = function(){
         };
       }
     }
+    function setHud(title, rows) {
+      var hud = document.getElementById("HUD");
+      hud.replaceChildren();
+      var h2 = document.createElement("h2");
+      h2.textContent = title;
+      hud.appendChild(h2);
+      for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var p = document.createElement("p");
+        if (row.className) p.className = row.className;
+        if (row.label) p.appendChild(document.createTextNode(row.label));
+        if (row.value !== undefined) {
+          var span = document.createElement("span");
+          span.className = row.valueClass || "hud-value";
+          span.textContent = row.value;
+          p.appendChild(span);
+        }
+        hud.appendChild(p);
+      }
+    }
+    function fillInstructions(title) {
+      var root = document.getElementById("instructions");
+      root.replaceChildren();
+      var h2 = document.createElement("h2");
+      h2.textContent = title;
+      var p = document.createElement("p");
+      var lines = [
+        "Use the arrow keys (up, down) to move the player forward or backward, ",
+        "or (left, right) to rotate clockwise or counter-clockwise. ",
+        "Space-bar snaps a phot ",
+        "Can you find the exit?"
+      ];
+      for (var i = 0; i < lines.length; i++) {
+        p.appendChild(document.createTextNode(lines[i]));
+        if (i < lines.length - 1) p.appendChild(document.createElement("br"));
+      }
+      root.appendChild(h2);
+      root.appendChild(p);
+    }
     function containsBlock(x,y) {
-      return (map[Math.floor(y)][Math.floor(x)] !== -1); 
+      var cy = Math.floor(y);
+      var cx = Math.floor(x);
+      if (cy < 0 || cx < 0 || cy >= map.length || cx >= map[0].length) return true;
+      return map[cy][cx] !== -1;
     };
     var map = [ [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 
         [1,-1,-1,2,-1,-1,-1,-1,-1,-1,-1,-1,2,-1,-1,1],  ///Done Row
@@ -248,7 +292,7 @@ var Game = function(){
         this.context = document.getElementById('screenshot').getContext('2d');
         var filtered = false;
         var f;
-        $("#screenshot").on("click", function() {
+        document.getElementById("screenshot").addEventListener("click", function() {
           if(filtered){
             filtered = false;
             f.reset().render();
@@ -342,15 +386,13 @@ var Game = function(){
       canvas.init();
       palette.init();
       dino.init();
-      var instructionsHtml = "<h2>My Maze Delux Level 2</h2>";
-      instructionsHtml += "<p>Use the arrow keys (up, down) to move the player forward or backward, <br>";
-      instructionsHtml += "or (left, right) to rotate clockwise or counter-clockwise. <br>";
-      instructionsHtml += "Space-bar snaps a phot <br>";
-      instructionsHtml += "Can you find the exit?</p>";
-      $("#instructions").html(instructionsHtml);
-
-
-      
+      fillInstructions("My Maze Delux Level 2");
+      jaws.on_keyup(["left", "right"], function(){
+         player.direction = 0;
+      });
+      jaws.on_keyup(["up", "down"], function(){
+         player.speed = 0;
+      });
     };
     this.update = function(){
       raycaster.castRays();
@@ -358,16 +400,13 @@ var Game = function(){
       if(jaws.pressed("right")) { player.direction = 1 };
       if(jaws.pressed("up")) { player.speed = 1 };
       if(jaws.pressed("down")) { player.speed = -1 }; 
-  
-      if(jaws.on_keyup(["left", "right"], function(){
-         player.direction = 0;
-      })); 
-      if(jaws.on_keyup(["up", "down"], function(){
-         player.speed = 0;
-      })); 
+
       if(jaws.pressed("space")) { 
         camera.takePicture();
       }; 
       player.move();
     };
   }
+
+jaws.assets.add(["dino.png"]);
+jaws.start(Game);

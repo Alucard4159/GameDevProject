@@ -1,0 +1,12 @@
+---
+description: Do not deploy or apply infra without explicit user consent in the current thread.
+alwaysApply: true
+---
+
+# Deploy explicit consent
+
+**Never** run production/staging deploy scripts, `terraform apply`, forced rollouts, or migration tasks against shared environments **unless** the user clearly asked to deploy in this conversation.
+
+After a fix: verify locally when possible, summarize what would deploy, and **ask** — do not assume deploy intent.
+
+Kiro parity: `.kiro/steering/deploy-safety.md` when IDE wiring is installed.

@@ -1,0 +1,15 @@
+---
+description: Investigate with logs and runtime evidence before stating root cause or writing fixes.
+alwaysApply: true
+---
+
+# Evidence-first diagnosis
+
+When troubleshooting failures:
+
+1. Check logs, API responses, DB state, or process exit reason **before** speculating.
+2. Quote actual errors and separate facts from interpretation.
+3. Do not implement fixes for unverified root causes.
+4. Say what you still need to inspect when uncertain.
+
+Kiro parity: `.kiro/steering/kiro-evidence-first.md` when IDE wiring is installed.

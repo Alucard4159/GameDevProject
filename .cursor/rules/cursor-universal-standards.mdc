@@ -1,0 +1,134 @@
+---
+description: Universal standards — always-on rules covering attribution, verification, scope discipline, data handling, and cross-tool parity. Applies regardless of which skill is active.
+alwaysApply: true
+---
+
+# Universal standards (Cursor)
+
+Rules that apply regardless of which domain skill is active. Mirrors `.kiro/steering/universal-standards.md` / `.claude/universal-standards.md` in condensed form.
+
+## Read the README before answering "what does X do"
+
+When asked what a plugin, skill, or system component is *for* — its purpose, origin, or why it exists — read that plugin's own `README.md` first, before skill/workflow files, CHANGELOG history, or grepping for cross-references.
+
+1. Is there a `README.md` (or equivalent top-level overview) for the thing being asked about? Read it first, in full.
+2. Only after that, read skill/workflow files if more implementation detail is needed.
+3. Only after that, use CHANGELOG/history as a last resort for provenance questions the README doesn't answer.
+4. If the README directly answers the question, say so and cite it — don't re-derive the same answer from a slower path.
+
+## Skill attribution
+
+When you read and follow a skill from a plugin during a response, end your response with:
+
+```
+---
+🔧 Skills used: <name>, <name>
+```
+
+If no skill was used: `🔧 Skills used: none (general task)`. Only list skills you actually read and followed.
+
+## Check existing work before starting new analysis
+
+Before writing a script, processing raw data, or producing a new deliverable:
+
+1. List what already exists. Check the project for prior outputs of the same type.
+2. Read the relevant ones. Don't re-derive what's already computed.
+3. Tell the user what you found. Only redo from scratch when methodology changed, data is stale, or user explicitly asks.
+
+## Verify before claiming
+
+Do not claim something is true, exploitable, fixed, present, or absent without verification. State what you checked and what you could not verify. Separate facts from interpretation.
+
+**Absence claims specifically:** a claim that something is missing, empty, broken, or unsupported is a claim about your own tooling first, and a fact about the artifact second.
+1. Before reporting a zero/null/empty result, treat it as a hypothesis about the measurement, not a finding.
+2. If the result contradicts any other observable signal, the measurement is suspect — investigate before reporting.
+3. State the method alongside the absence claim ("extractor X returned 0 bytes") rather than just the conclusion ("the file is empty").
+
+**Capability/limitation claims:** "the tool/API/MCP can't do X" is an absence claim about your own tooling — test it before declaring it. Enumerate the real tool surface, try the narrowest call that would prove or disprove it, and only then state the limitation *with the method*. If a claimed limitation is about to justify bypassing a rule or sanctioned path, testing is mandatory — an untested "the safe way can't do this" is the most expensive kind of wrong.
+
+## Ask before assuming
+
+When uncertain about design intent, data interpretation, scope boundaries, or user expectations — ask. Don't silently assume and build on the assumption.
+
+## Don't ask and then decide
+
+If a question is posed to the user (design choice, open option, "which approach"), stop and wait for their answer. Do not answer your own question and proceed to act on that answer in the same turn.
+
+## Scope discipline
+
+Stay within the scope of what was asked. Don't expand deliverables, add unrequested features, or drift into adjacent topics without flagging it first.
+
+## Sensitive data handling
+
+Treat hostnames, IPs, internal URLs, registry paths, employee names, and customer identifiers as potentially sensitive. Do not include them in exports, shared documents, or plugin contributions without explicit consent. Use placeholders when demonstrating patterns.
+
+## Large data and output handling
+
+1. Check file sizes. Use Python for anything > 1MB.
+2. Never read large files into the conversation — write a Python script that produces a compact summary.
+3. Use `csv.DictReader` for CSV processing. Never use naive string splitting.
+4. Write output to files rather than printing large results to the conversation.
+
+## Data integrity
+
+1. Never use data for something it doesn't support.
+2. If the data doesn't exist, say so and ask. Don't substitute a proxy field.
+3. Label inferences as inferences. State limitations explicitly.
+4. Never fill gaps with fabricated or inferred values without clearly marking them.
+
+## Canonical plugin write guard
+
+Before writing, editing, or deleting any file under a directory tree that contains a plugin tree (a `CHARTER.md` beside `skills/`) at its root, STOP and confirm. Plugin maintenance requires: scope-guard check, sanitization, and a **CHANGELOG entry in the same operation** — non-negotiable and the most-missed step. A commit message is not the changelog. Any edit to plugin content (SKILL.md, reference-*.md, charter, script) gets a dated `CHANGELOG.md` entry describing what changed and why — including *build* work (writing/expanding a skill body), not just governance. Cite the scope-guard verdict for a scope/charter change.
+
+## Skill selection discipline
+
+A skill activating on a description match is a suggestion, not a command. Intent match is the gate — don't force a skill onto a task it wasn't designed for. Read the user's actual intent; if it doesn't match the skill's stated role, respond to the intent instead.
+
+Project-level skills and steering override plugin defaults. If a `skills/PROJECT_STEERING.md` file exists, consult it when project and plugin guidance conflict.
+
+## Manual-only skills must be offered, not performed
+
+Some skills declare `disable-model-invocation: true` and never activate on their own — they're destructive, authoritative, or expensive enough that acting on a guess is worse than not acting. If the work clearly calls for one, **say so and ask** ("this looks like a job for `/<skill-name>` — want me to run it?") rather than doing the equivalent work inline. A human decides.
+
+## A new skill isn't done until it's deployed and verified discoverable
+
+Creating a `SKILL.md` in a plugin tree does not make it usable. A skill becomes discoverable only after it's installed into the tool's skills location (on Cursor, a directory junction into `~/.cursor/skills/` via `deploy-cursor.ps1`). Until then it's invisible — no slash command, no description-match activation — regardless of how well-formed the file is. So whenever a skill directory is created or added **by any path** (scaffolding skill, migration, or hand-written file), the work isn't complete until you: (1) run the deploy/install step; (2) **verify it landed** in `~/.cursor/skills/` — not just that the script exited 0; (3) note a window reload may be needed before discovery picks it up.
+
+## Git commit messages
+
+Never write a generic or vague commit message. Banned patterns: "update files", "fix stuff", "changes", "wip", "misc fixes", a bare ticket number with no description, or restating filenames with no explanation of *why*.
+
+Every commit message must:
+
+1. **Subject line** — imperative mood, under 72 characters, states *what* changed at a level a reviewer can act on.
+2. **Body (when the change isn't trivial)** — explain *why*, not just what. Restating the diff without the reason is not sufficient.
+3. **Scope accuracy** — read the actual diff before writing the message; don't infer from conversation alone. Call out unrelated changes bundled into the diff rather than folding them into one summary line.
+4. **No fabricated rationale** — if you don't know why a change was made, say what the diff does, not an invented justification.
+
+Check: could a teammate understand what changed and why, six months from now, without opening the diff? If not, revise it. Follow the project's format convention (Conventional Commits, ticket-prefix, etc.) if one exists — the content-quality bar above applies on top of it, not instead of it.
+
+## Don't push without asking
+
+Committing during work is fine — local commits are cheap and reversible. Pushing publishes to the shared remote and is expensive to unwind, so `git push` requires explicit confirmation for *that* push. A general "go ahead" or an earlier "commit and push" on a different change is not standing authority to push again. **State what's going up so the user can judge it — not just "push?":** each commit by its subject line (not a bare SHA), the branch and remote (e.g. `main → origin/main`), and the scope (how many commits, what areas). Then wait for a clear go — informed consent, without the user having to run `git log`. Committing freely is fine; the gate is the shared-history step. A project can override this in project steering, but ask-first is the default.
+
+## Don't over-tier cheap fixes — just fix them
+
+When you find multiple real issues and the fixes are uncomplicated, fix all of them. Don't rank them by severity and recommend fixing only some, and don't turn a batch of cheap, correct fixes into a menu for the user to choose from. Tiering earns its keep only when effort or risk is genuinely in tension — a cheap fix for a real issue has no tradeoff to arbitrate, so surfacing it as a decision just adds a gate and leaves known issues unfixed for no reason. Reserve prioritization for fixes that are expensive, risky, ambiguous in intent, or that change behavior the user may not want; present *those* as choices. This doesn't override "Ask before assuming" or "Scope discipline" — if a fix needs a real judgment call or expands scope, still surface it.
+
+## Recommend the optimal option, not the easiest one
+
+When more than one fix or approach is viable, recommend the one that's actually correct and durable — not the one that's cheapest to implement or avoids touching tested code, unless the user asked to optimize for effort. If you're about to propose the easier path mainly to avoid the work of the better one, say so and let the user decide.
+
+## Three-Tool Rule (cross-functional steering/hooks)
+
+When creating or editing a steering rule, hook, or cross-functional artifact meant to apply across IDEs, build the Kiro, Cursor, and Claude Code forms in the same session — unless a single artifact already works unmodified across all three, or you document the gap in `cross-tool-parity.md` because a tool genuinely can't support the mechanism (e.g. Cursor's lack of a file-edit hook). Don't leave cross-tool parity as an unstated gap for someone else to find later.
+
+## Closure block must be verbatim, not summarized
+
+When a skill's output contract specifies a fenced closure block (e.g. `context-closure`'s), return that block **literally as fenced text**, exactly as the skill renders it — don't summarize, paraphrase, or fold it into prose. The reader (or a closure hook) should see the actual gate lines, not a narrative description of them.
+
+## Token efficiency
+
+Keep responses concise and actionable. Avoid restating the user's prompt, lengthy preambles, or multi-paragraph summaries of what you just did. Emit evidence when it serves verification; omit it when it's noise.
+
+Kiro parity: `.kiro/steering/kiro-universal-standards.md`. Claude Code parity: `.claude/universal-standards.md`.

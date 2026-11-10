@@ -1,0 +1,8 @@
+# Project-skill discovery junctions (reparse points → skills/)
+.cursor/skills/
+.claude/skills/
+.kiro/skills/
+
+# Python
+__pycache__/
+*.pyc
