@@ -4,6 +4,15 @@
 
 Reverse chronological log of notable implementation and operational changes.
 
+## 2026-11-10: QA triage fixes (controls, HUD, camera, canvas)
+
+- What changed:
+  - Both levels: poll-reset movement each frame (fixes stuck keys after blur); `Math.floor` exit cell; percent uses `√(13²+13²)` + clamp; rising-edge space + Filtrr reset/generation gate; shade index clamp; HUD skip when unchanged; typo fixes
+  - Maze canvas bitmap 600×300 with FOV-preserving ray count; screenshot polaroid 300×150 downscales capture
+- Why: Close all 8 items from `.context/triage-summary.md`
+- Impact: Controls stable across blur; exit/percent/camera behave correctly; sharper maze without blowing layout
+- Follow-ups: Optional jaws/filtrr2 vendor dedupe; smoke both levels in browser
+
 ## 2026-11-10: Context bootstrap + window fit + security hardening
 
 - What changed:

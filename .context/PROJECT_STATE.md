@@ -11,13 +11,13 @@ Last updated: 2026-11-10
 ## Current status
 
 - Phase: maintenance
-- Overall: green — playable after security/hardening and window-fit work; missing asset files still 404
+- Overall: green — playable after security/hardening, window-fit, and QA triage bugfixes; PNGs present (tiny 16×16 placeholders)
 
 ## Active priorities
 
-- P1: Restore or replace missing `dino.png` / `camera.png` assets
+- P1: Browser smoke of both levels after triage fixes
 - P2: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
-- P3: Optional higher-res canvas / true responsive layout later
+- P3: Optional art upgrade for `dino.png` / `camera.png`; optional vendor dedupe
 
 ## Deployment Environments
 
@@ -31,5 +31,5 @@ Last updated: 2026-11-10
 
 ## Risks / blockers
 
-- Missing `Level1|2/dino.png` and `camera.png` — sprite and camera icon 404
+- Placeholder `dino.png` / `camera.png` are valid but 16×16 — fine for load, weak visually
 - Vendored jaws.js still contains `eval(_constructor)` gadgets; mitigated by CSP `script-src 'self'` (no `unsafe-eval`)

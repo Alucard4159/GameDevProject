@@ -2,13 +2,21 @@
 
 Newest first. Capture what was decided and why.
 
+## 2026-11-10: Match maze canvas bitmap to CSS; keep screenshot polaroid
+
+**Decision**: Set `#canvas` backing store to 600×300 (same as CSS). `numberOfRays = canvas.width` with `angleBetweenRays = (60°)/rays` so FOV stays 60°. Screenshot stays 300×150 and `drawImage` downscales the capture into that polaroid.
+
+**Rationale**: Default HTML canvas was 300×150 stretched by CSS, so the view was soft and the photo looked half-size vs the maze. Upsizing the maze buffer without changing FOV fixes sharpness; keeping the screenshot small preserves the existing `#titleBlock` layout.
+
+**Tradeoff**: Twice the ray work per frame (300→600). Window fit still uses `fit.js` scale on the whole block — that decision still applies for viewport fit, not for the internal maze resolution.
+
 ## 2026-11-10: Scale the layout block instead of resizing canvas buffers
 
 **Decision**: Dynamic window sizing via `fit.js` CSS `transform: scale` on `#titleBlock`.
 
 **Rationale**: Raycaster assumes fixed canvas geometry and ray count; changing bitmap size would break drawing math. Scaling the whole composition preserves layout and gameplay.
 
-**Tradeoff**: Soft/blurry upscale on large monitors; not a true high-res renderer.
+**Tradeoff**: Soft/blurry upscale on large monitors; not a true high-res renderer. *(Amended same day: maze bitmap now matches CSS 600×300 with FOV-preserving ray count — see entry above. `fit.js` remains the viewport-fit mechanism.)*
 
 ## 2026-11-10: Keep jQuery for Filtrr2; vendor locally under CSP
 

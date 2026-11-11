@@ -5,8 +5,8 @@ var Game = function(){
     var raycaster = {
       init: function(){
         this.maxDistance = Math.sqrt(minimap.cellsAcross * minimap.cellsAcross + minimap.cellsDown * minimap.cellsDown);
-        var numberOfRays = 300;
-        var angleBetweenRays = .2 * Math.PI /180;
+        var numberOfRays = canvas.width;
+        var angleBetweenRays = (60 * Math.PI / 180) / numberOfRays;
         this.castRays = function() {
           foregroundSlivers = [];
           backgroundSlivers = [];
@@ -94,6 +94,8 @@ var Game = function(){
           var percentageDistance = adjustedDistance / this.maxDistance;
           var brightness = 1 - percentageDistance;
           var shade = Math.floor(palette.shades * brightness);
+          if (shade < 0) shade = 0;
+          if (shade >= palette.shades) shade = palette.shades - 1;
           var color = palette.walls[wallType][shade];
           if(adjustedDistance < dino.distance){
             foregroundSlivers.push([i, wallTop, wallBottom, color]);
@@ -120,7 +122,7 @@ var Game = function(){
           if (!containsBlock(newX, newY)){
             this.x = newX;
             this.y = newY;
-            if(Math.round(this.x) == 1 && Math.round(this.y) == 1)
+            if(Math.floor(this.x) === 1 && Math.floor(this.y) === 1)
             {
               setHud("Jessie's Maze Deluxe Level 1", [
                 { className: "hud-x", value: "SUCCESS!", valueClass: "hud-success" },
@@ -130,14 +132,12 @@ var Game = function(){
             }
             else
             {             
-              var percentComplete = 0;
               var xCheck = this.x - 1;
               var yCheck = this.y - 1;
-              var compCheck = 18.3;
-              percentComplete = Math.sqrt(xCheck * xCheck + yCheck * yCheck);
-              percentComplete = percentComplete / compCheck;
-              percentComplete = percentComplete * 100;
-              percentComplete = 100 - percentComplete;
+              var compCheck = Math.sqrt(13 * 13 + 13 * 13);
+              var percentComplete = 100 - (Math.sqrt(xCheck * xCheck + yCheck * yCheck) / compCheck) * 100;
+              if (percentComplete < 0) percentComplete = 0;
+              if (percentComplete > 100) percentComplete = 100;
               setHud("Jessie's Maze Deluxe Level 1", [
                 { className: "hud-x", label: "Player.X- ", value: String(Math.ceil(this.x)) },
                 { className: "hud-stat", label: "Player.Y- ", value: String(Math.ceil(this.y)) },
@@ -163,7 +163,15 @@ var Game = function(){
         };
       }
     }
+    var lastHudKey = "";
     function setHud(title, rows) {
+      var key = title;
+      for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        key += "|" + (row.className || "") + "|" + (row.label || "") + "|" + (row.value || "") + "|" + (row.valueClass || "");
+      }
+      if (key === lastHudKey) return;
+      lastHudKey = key;
       var hud = document.getElementById("HUD");
       hud.replaceChildren();
       var h2 = document.createElement("h2");
@@ -192,7 +200,7 @@ var Game = function(){
       var lines = [
         "Use the arrow keys (up, down) to move the player forward or backward, ",
         "or (left, right) to rotate clockwise or counter-clockwise. ",
-        "Space-bar snaps a phot ",
+        "Space-bar snaps a photo ",
         "Can you find the exit?"
       ];
       for (var i = 0; i < lines.length; i++) {
@@ -227,6 +235,8 @@ var Game = function(){
     var canvas = {
       init: function(){
         this.element = document.getElementById('canvas');
+        this.element.width = 600;
+        this.element.height = 300;
         this.context = this.element.getContext("2d");
         this.width = this.element.width;
         this.height = this.element.height;
@@ -289,13 +299,17 @@ var Game = function(){
     };
     var camera = {
       init: function(){
-        this.context = document.getElementById('screenshot').getContext('2d');
+        var shot = document.getElementById('screenshot');
+        shot.width = 300;
+        shot.height = 150;
+        this.context = shot.getContext('2d');
         var filtered = false;
         var f;
-        document.getElementById("screenshot").addEventListener("click", function() {
+        var pictureGeneration = 0;
+        shot.addEventListener("click", function() {
           if(filtered){
             filtered = false;
-            f.reset().render();
+            if (f) f.reset().render();
           } else{
             filtered = true;
             f = Filtrr2("#screenshot", function() {
@@ -306,12 +320,19 @@ var Game = function(){
           };
         });
         this.takePicture = function(){
-          var image = new Image();
-          image.src = canvas.element.toDataURL('image/png');
-          image.onload = function() {
-             camera.context.drawImage(image,0,0);
+          if (f) {
+            f.reset();
+            f = null;
           }
           filtered = false;
+          var generation = ++pictureGeneration;
+          var image = new Image();
+          image.onload = function() {
+             if (generation !== pictureGeneration) return;
+             camera.context.clearRect(0, 0, shot.width, shot.height);
+             camera.context.drawImage(image, 0, 0, shot.width, shot.height);
+          };
+          image.src = canvas.element.toDataURL('image/png');
         }
       }
     };
@@ -378,32 +399,31 @@ var Game = function(){
         canvas.drawSliver.apply(canvas, foregroundSlivers[i]);
       };
     };
+    var spaceWasDown = false;
     this.setup = function() {
       camera.init();
       minimap.init();
       player.init();
-      raycaster.init(); 
       canvas.init();
       palette.init();
+      raycaster.init();
       dino.init();
-      fillInstructions("My Maze Delux Level 1");
-      jaws.on_keyup(["left", "right"], function(){
-         player.direction = 0;
-      });
-      jaws.on_keyup(["up", "down"], function(){
-         player.speed = 0;
-      });
+      fillInstructions("My Maze Deluxe Level 1");
     };
     this.update = function(){
       raycaster.castRays();
+      player.direction = 0;
+      player.speed = 0;
       if(jaws.pressed("left")) { player.direction = -1 };
       if(jaws.pressed("right")) { player.direction = 1 };
       if(jaws.pressed("up")) { player.speed = 1 };
-      if(jaws.pressed("down")) { player.speed = -1 }; 
+      if(jaws.pressed("down")) { player.speed = -1 };
 
-      if(jaws.pressed("space")) { 
+      var spaceDown = !!jaws.pressed("space");
+      if (spaceDown && !spaceWasDown) {
         camera.takePicture();
-      }; 
+      }
+      spaceWasDown = spaceDown;
       player.move();
     };
   }
