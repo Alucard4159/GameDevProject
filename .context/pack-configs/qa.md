@@ -9,10 +9,11 @@
 ## Scope
 
 - Prefer UI / game-loop bug hunts over backend-contract skills
-- Primary surfaces: `Level1/game.js`, `Level2/game2.js`, `fit.js`, both `index.html` + CSS
+- Primary surfaces: `Level1/game.js`, `Level2/game2.js`, `engine.js`, `fit.js`, both `index.html` + CSS
 - Browser verification via local static server (`py -3 -m http.server`)
+- No TypeScript — skip `typescript-review` unless `.ts` appears
 
 ## Constraints
 
 - No server endpoints to contract-test
-- Missing assets (`dino.png`, `camera.png`) are known; don't treat 404s for those as new regressions unless the task is asset restore
+- Placeholder `dino.png` / `camera.png` are present (tiny); don't treat their existence as a regression

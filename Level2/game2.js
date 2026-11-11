@@ -304,27 +304,21 @@ var Game = function(){
         shot.height = 150;
         this.context = shot.getContext('2d');
         var filtered = false;
-        var f;
+        var originalPixels = null;
         var pictureGeneration = 0;
         shot.addEventListener("click", function() {
-          if(filtered){
+          if (filtered) {
             filtered = false;
-            if (f) f.reset().render();
-          } else{
+            Engine.restore(camera.context, originalPixels);
+          } else {
+            originalPixels = Engine.snapshot(camera.context, shot.width, shot.height);
+            Engine.sepia(camera.context, shot.width, shot.height);
             filtered = true;
-            f = Filtrr2("#screenshot", function() {
-              //this.expose(50)
-              this.sepia()
-              .render();
-            }, {store: false});
-          };
+          }
         });
         this.takePicture = function(){
-          if (f) {
-            f.reset();
-            f = null;
-          }
           filtered = false;
+          originalPixels = null;
           var generation = ++pictureGeneration;
           var image = new Image();
           image.onload = function() {
@@ -360,7 +354,13 @@ var Game = function(){
     }
     var dino = {
       init: function(){
-        this.sprite = new jaws.Sprite({image: "dino.png", x: 0, y: canvas.height/2, anchor: "center"});
+        this.sprite = new Engine.Sprite({
+          image: "dino.png",
+          x: 0,
+          y: canvas.height / 2,
+          anchor: "center",
+          context: canvas.context
+        });
         this.x = 2; 
         this.y = 2;
         this.show = false;
@@ -414,12 +414,12 @@ var Game = function(){
       raycaster.castRays();
       player.direction = 0;
       player.speed = 0;
-      if(jaws.pressed("left")) { player.direction = -1 };
-      if(jaws.pressed("right")) { player.direction = 1 };
-      if(jaws.pressed("up")) { player.speed = 1 };
-      if(jaws.pressed("down")) { player.speed = -1 };
+      if(Engine.pressed("left")) { player.direction = -1 };
+      if(Engine.pressed("right")) { player.direction = 1 };
+      if(Engine.pressed("up")) { player.speed = 1 };
+      if(Engine.pressed("down")) { player.speed = -1 };
 
-      var spaceDown = !!jaws.pressed("space");
+      var spaceDown = !!Engine.pressed("space");
       if (spaceDown && !spaceWasDown) {
         camera.takePicture();
       }
@@ -428,5 +428,4 @@ var Game = function(){
     };
   }
 
-jaws.assets.add(["dino.png"]);
-jaws.start(Game);
+Engine.start(Game, { assets: ["dino.png"] });

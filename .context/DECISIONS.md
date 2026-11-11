@@ -2,6 +2,22 @@
 
 Newest first. Capture what was decided and why.
 
+## 2026-11-11: Replace jaws / Filtrr2 / jQuery with first-party `engine.js`
+
+**Decision**: Delete jaws.js, Filtrr2, and jQuery (including orphan level copies). Add root `engine.js` for asset load, rAF loop, keyboard (cleared on blur), sprite blit, and in-canvas sepia. Keep maps, HUD, minimap, dino, screenshot/polaroid, level links, `fit.js`, and CSP `'self'`.
+
+**Rationale**: User does not want abandoned dependencies. Version-bumping dead libs was the wrong cleanup; deleting them and preserving gameplay flow is. jQuery existed only for Filtrr2; both go together. jaws `eval` gadgets leave the tree entirely.
+
+**Tradeoff**: Own a small runtime instead of third-party frameworks. Sepia is a simple pixel matrix (close to Filtrr2's look, not pixel-identical). No npm introduced.
+
+**Supersedes**: same-day "Do not bump vendored libs"; 2026-11-10 "Keep jQuery for Filtrr2"; 2026-11-10 "Block jaws eval with CSP, not a jaws fork" (CSP remains; jaws is gone).
+
+## 2026-11-11: Do not bump vendored libs (jQuery 4 / jaws / Filtrr2) — superseded
+
+**Decision**: ~~Keep jQuery 3.7.1; do not chase jaws/Filtrr2 updates.~~ **Superseded** by "Replace jaws / Filtrr2 / jQuery with first-party `engine.js`" the same day after explicit user direction to remove abandoned deps.
+
+**Original rationale**: Prefer delete/replace over version bumps — that part still holds; the replace landed.
+
 ## 2026-11-10: Match maze canvas bitmap to CSS; keep screenshot polaroid
 
 **Decision**: Set `#canvas` backing store to 600×300 (same as CSS). `numberOfRays = canvas.width` with `angleBetweenRays = (60°)/rays` so FOV stays 60°. Screenshot stays 300×150 and `drawImage` downscales the capture into that polaroid.
@@ -18,18 +34,14 @@ Newest first. Capture what was decided and why.
 
 **Tradeoff**: Soft/blurry upscale on large monitors; not a true high-res renderer. *(Amended same day: maze bitmap now matches CSS 600×300 with FOV-preserving ray count — see entry above. `fit.js` remains the viewport-fit mechanism.)*
 
-## 2026-11-10: Keep jQuery for Filtrr2; vendor locally under CSP
+## 2026-11-10: Keep jQuery for Filtrr2; vendor locally under CSP — superseded
 
-**Decision**: Ship `vendor/jquery-3.7.1.slim.min.js` and drop CDN/`jquery.js` 404; HUD/instructions use DOM APIs instead of `.html()`.
+**Decision**: ~~Ship `vendor/jquery-3.7.1.slim.min.js` for Filtrr2.~~ **Superseded 2026-11-11** by first-party `engine.js` sepia (jQuery and Filtrr2 deleted). DOM HUD/instructions (no `.html()`) and CSP `'self'` still stand.
 
-**Rationale**: Filtrr2's sepia path requires `$`. Strict CSP (`script-src 'self'`) needs a local file and no inline boot script.
+**Rationale (historical)**: Filtrr2 needed `$`; CSP forbade CDN/inline boot.
 
-**Tradeoff**: Still depends on an aging filter lib; jQuery remains for that one feature.
+## 2026-11-10: Block jaws `eval` with CSP, not a jaws fork — superseded
 
-## 2026-11-10: Block jaws `eval` with CSP, not a jaws fork
+**Decision**: ~~Mitigate jaws `eval` with CSP only.~~ **Superseded 2026-11-11** — jaws deleted; CSP without `unsafe-eval` remains.
 
-**Decision**: Meta CSP without `unsafe-eval` instead of patching duplicated `Level1|2/jaws.js`.
-
-**Rationale**: Game never calls `Sprite.clone` / `SpriteList.load`; CSP neutralizes the latent gadget without maintaining a jaws fork in two trees.
-
-**Tradeoff**: If someone later uses those APIs, they break under CSP until jaws is replaced or allowlisted carefully.
+**Rationale (historical)**: Avoided maintaining a jaws fork in two trees while the game never called the eval paths.

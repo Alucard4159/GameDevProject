@@ -2,22 +2,23 @@
 
 > **Context Safety:** Redact sensitive values. No secrets in this file.
 
-Last updated: 2026-11-10
+Last updated: 2026-11-11
 
 ## What this project does
 
-- College HTML5 maze game ("Jessie's Maze Deluxe"): two levels of client-side raycasting with a minimap, HUD, screenshot/sepia filter (Filtrr2), and level navigation. Static files only — no backend.
+- College HTML5 maze game ("Jessie's Maze Deluxe"): two levels of client-side raycasting with a minimap, HUD, screenshot/sepia filter, and level navigation. Static files only — no backend.
 
 ## Current status
 
 - Phase: maintenance
-- Overall: green — playable after security/hardening, window-fit, and QA triage bugfixes; PNGs present (tiny 16×16 placeholders)
+- Overall: green — third-party jaws/Filtrr2/jQuery removed; first-party `engine.js` owns loop/input/sprite/sepia. Browser smoke passed 2026-11-11 (exit SUCCESS walk not exercised).
+- Latest shipped before this change: `903a3ef` on `origin/main` (triage fixes). Engine cut is local until committed.
 
 ## Active priorities
 
-- P1: Browser smoke of both levels after triage fixes
+- P1: Commit engine cut + context/README updates
 - P2: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
-- P3: Optional art upgrade for `dino.png` / `camera.png`; optional vendor dedupe
+- P3: Optional art upgrade for `dino.png` / `camera.png`
 
 ## Deployment Environments
 
@@ -25,11 +26,10 @@ Last updated: 2026-11-10
 
 ## Environment notes (safe only)
 
-- Runtime(s): browser (ES5-era game JS + jQuery 3.7.1 slim + jaws.js + filtrr2)
+- Runtime(s): browser (ES5-era game JS + first-party `engine.js` + `fit.js`)
 - Deployment target(s): local / any static file host
-- Key external dependencies (names only): jQuery (vendored), jaws.js, filtrr2.js
+- Key external dependencies (names only): none (no jQuery / jaws / Filtrr2)
 
 ## Risks / blockers
 
 - Placeholder `dino.png` / `camera.png` are valid but 16×16 — fine for load, weak visually
-- Vendored jaws.js still contains `eval(_constructor)` gadgets; mitigated by CSP `script-src 'self'` (no `unsafe-eval`)

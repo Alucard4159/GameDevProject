@@ -1,6 +1,6 @@
 # secrev — project config
 
-> Static HTML/JS only. Threat model is browser XSS / sink misuse / supply-chain of vendored libs — not auth or server RCE.
+> Static HTML/JS only. Threat model is browser XSS / sink misuse — not auth or server RCE.
 
 ## Plugins root
 
@@ -8,11 +8,11 @@
 
 ## Scope
 
-- Focus: DOM sinks, CSP, asset loading, vendored `jaws.js` / `filtrr2.js` / jQuery
-- Known mitigated: jaws `eval(_constructor)` blocked by CSP without `unsafe-eval`
+- Focus: DOM sinks, CSP, asset loading, first-party `engine.js` / `fit.js` / level game JS
+- Known removed: jaws.js (`eval`), Filtrr2, jQuery — do not reintroduce
 - Known safe-today: HUD built with `textContent` / DOM nodes (do not reintroduce `.html()` string builds)
 
 ## Constraints
 
 - No secrets/tokens in repo
-- Do not hotlink CDNs without SRI; keep scripts under `vendor/` or level folders for CSP `'self'`
+- Do not hotlink CDNs without SRI; keep scripts same-origin for CSP `'self'`
