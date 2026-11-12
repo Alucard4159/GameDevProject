@@ -5,8 +5,9 @@
 ## Repository layout
 
 ```text
-Level1/          Level 1 page, game.js, CSS, PNG assets
-Level2/          Level 2 page, game2.js, CSS, PNG assets
+Level1/          Level 1 page, game.js, CSS, dino.png
+Level2/          Level 2 page, game2.js, CSS, dino.png
+camera.svg       Shared HUD camera chrome
 engine.js        Shared runtime: assets, rAF loop, keys, sprite, sepia
 fit.js           Scales #titleBlock to the viewport on load/resize
 .context/        Project handoff + pack-configs

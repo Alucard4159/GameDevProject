@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" role="img" aria-label="hand holding camera">
+  <!-- Faithful upsample of old Level1/camera.png: black camcorder back + transparent LCD + peach arm -->
+  <g fill="#e1b67b">
+    <rect x="8" y="3" width="2" height="1"/>
+    <rect x="7" y="4" width="4" height="1"/>
+    <rect x="9" y="5" width="3" height="1"/>
+    <rect x="11" y="6" width="2" height="1"/>
+    <rect x="10" y="7" width="4" height="1"/>
+    <rect x="12" y="8" width="3" height="1"/>
+    <rect x="13" y="9" width="3" height="1"/>
+    <rect x="13" y="10" width="3" height="1"/>
+    <rect x="14" y="11" width="2" height="1"/>
+    <rect x="15" y="12" width="1" height="1"/>
+  </g>
+  <g fill="#000">
+    <rect x="7" y="5" width="2" height="1"/>
+    <rect x="0" y="6" width="11" height="1"/>
+    <rect x="0" y="7" width="8" height="1"/>
+    <rect x="9" y="7" width="1" height="1"/>
+    <rect x="0" y="8" width="1" height="1"/>
+    <rect x="6" y="8" width="5" height="1"/>
+    <rect x="0" y="9" width="1" height="1"/>
+    <rect x="6" y="9" width="1" height="1"/>
+    <rect x="10" y="9" width="1" height="1"/>
+    <rect x="0" y="10" width="1" height="1"/>
+    <rect x="6" y="10" width="1" height="1"/>
+    <rect x="8" y="10" width="3" height="1"/>
+    <rect x="0" y="11" width="11" height="1"/>
+  </g>
+  <!-- LCD window: cols 1-5, rows 8-10 left empty (maze shows through) -->
+  <rect x="8" y="7" width="1" height="1" fill="#f22929"/>
+  <g fill="#3b3838">
+    <rect x="7" y="9" width="3" height="1"/>
+    <rect x="7" y="10" width="1" height="1"/>
+  </g>
+</svg>

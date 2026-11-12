@@ -27,10 +27,13 @@ html, body {
   }
   #camera{
     width:100px;
+    height:auto;
     position:absolute; 
     z-index:1;
     left:505px;
     top:240px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
   }
   #screenshot{
     background-color: white;

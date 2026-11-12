@@ -4,6 +4,18 @@
 
 Reverse chronological log of notable implementation and operational changes.
 
+## 2026-11-11: Hybrid art (64×64 dino PNG + SVG camera)
+
+- What changed:
+  - Replaced 16×16 placeholders with identical 64×64 transparent `dino.png` in Level1 and Level2
+  - Added root `camera.svg`; both levels' `#camera` img points at `../camera.svg`; deleted `camera.png`
+  - CSS: `#camera { height: auto; }` so SVG aspect is preserved at width 100px
+  - Restored peach hand/forearm on `camera.svg` after browser check (old PNG was handheld, first SVG floated)
+  - 2026-11-12: abandoned cartoon grip SVGs; rebuilt `camera.svg` as pixel-faithful 16×16 of old PNG (transparent LCD hole + peach arm); `#camera` CSS `image-rendering: pixelated`
+- Why: User chose hybrid — PNG dino + SVG camera; original camera’s “screen” is a transparency window over the maze, which illustrated fronts broke
+- Impact: Sharper dino; camera matches old HUD read with live LCD; no gameplay JS changes
+- Follow-ups: ~~Art acceptance~~ (user preferred sharp pixel SVG over blurry old upscale despite clipped arm); commit/push when ready
+
 ## 2026-11-11: Drop jaws / Filtrr2 / jQuery for first-party engine
 
 - What changed:
@@ -13,7 +25,7 @@ Reverse chronological log of notable implementation and operational changes.
   - Populated `PROJECT_FRONTMATTER.md`; refreshed root `README.md` (run/layout); dropped empty `vendor/` from `ARCHITECTURE.md`
 - Why: Remove abandoned dependencies while keeping maps, HUD, photos, level links, CSP; clear doc drift after the cut
 - Impact: No third-party JS left; smaller attack/surface and tree; frontmatter/README match the tree
-- Follow-ups: ~~Browser smoke~~ (passed 2026-11-11); optional PNG art upgrade; commit engine cut
+- Follow-ups: ~~Browser smoke~~ (passed 2026-11-11); ~~commit~~ (`2ae3778` on `origin/main`); ~~optional PNG art upgrade~~ (hybrid art same day)
 
 ## 2026-11-10: QA triage fixes (controls, HUD, camera, canvas)
 

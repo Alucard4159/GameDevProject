@@ -2,7 +2,7 @@
 
 > **Context Safety:** Redact sensitive values. No secrets in this file.
 
-Last updated: 2026-11-11
+Last updated: 2026-11-12
 
 ## What this project does
 
@@ -11,14 +11,14 @@ Last updated: 2026-11-11
 ## Current status
 
 - Phase: maintenance
-- Overall: green — third-party jaws/Filtrr2/jQuery removed; first-party `engine.js` owns loop/input/sprite/sepia. Browser smoke passed 2026-11-11 (exit SUCCESS walk not exercised).
-- Latest shipped before this change: `903a3ef` on `origin/main` (triage fixes). Engine cut is local until committed.
+- Overall: green — first-party `engine.js`; hybrid art accepted (64×64 dino PNGs + pixel-faithful `camera.svg` with transparent LCD). Engine-cut smoke passed 2026-11-11; camera settled/accepted 2026-11-12.
+- Latest shipped: `2ae3778` on `origin/main` (engine cut + context/README). Art upgrade accepted, still local/uncommitted.
 
 ## Active priorities
 
-- P1: Commit engine cut + context/README updates
-- P2: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
-- P3: Optional art upgrade for `dino.png` / `camera.png`
+- P1: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
+- P2: Optional in-browser walk to exit for SUCCESS HUD confirmation
+- P3: Commit/push hybrid art when ready
 
 ## Deployment Environments
 
@@ -32,4 +32,4 @@ Last updated: 2026-11-11
 
 ## Risks / blockers
 
-- Placeholder `dino.png` / `camera.png` are valid but 16×16 — fine for load, weak visually
+- (none active) — prior tiny placeholder PNG risk closed by hybrid art

@@ -2,6 +2,14 @@
 
 Newest first. Capture what was decided and why.
 
+## 2026-11-11: Hybrid art — 64×64 PNG dino + shared SVG camera
+
+**Decision**: Keep the in-maze dino as a real bitmap (`Level1|2/dino.png` at 64×64 with transparency) loaded via `Engine.Sprite`. Replace decorative `#camera` chrome with a shared root `camera.svg` referenced as `../camera.svg`; delete per-level `camera.png`. **Settled (2026-11-12):** `camera.svg` is a crispEdges 16×16 pixel rebuild of the old PNG — black camcorder *back*, peach arm stub, red REC, and a **transparent LCD window** (cols 1–5 / rows 8–10) so the maze shows through as the player moves. CSS uses `image-rendering: pixelated`. Earlier cartoon “front camera + detailed hand” SVG passes are abandoned.
+
+**Rationale**: User chose hybrid (PNG dino + SVG camera). In-browser compare showed the original asset’s value was the see-through LCD and back-of-camera silhouette, not a new illustrated grip. Opaque beige cameras broke that effect; freehand hands never matched the lo-fi read.
+
+**Tradeoff**: Two art pipelines (PNG + SVG). Dino still duplicated per level; camera is single-source at repo root. Camera art stays 16-logic pixels scaled up (chunky by design), not a high-res redraw. Peach arm clips at the sprite edge (same as the old PNG); user accepted that vs the blurry bilinear upscale (2026-11-12 side-by-side).
+
 ## 2026-11-11: Replace jaws / Filtrr2 / jQuery with first-party `engine.js`
 
 **Decision**: Delete jaws.js, Filtrr2, and jQuery (including orphan level copies). Add root `engine.js` for asset load, rAF loop, keyboard (cleared on blur), sprite blit, and in-canvas sepia. Keep maps, HUD, minimap, dino, screenshot/polaroid, level links, `fit.js`, and CSP `'self'`.

@@ -16,4 +16,4 @@
 ## Constraints
 
 - No server endpoints to contract-test
-- Placeholder `dino.png` / `camera.png` are present (tiny); don't treat their existence as a regression
+- Art: 64×64 `dino.png` per level + root `camera.svg`; missing assets are regressions, tiny placeholders are not expected

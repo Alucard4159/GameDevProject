@@ -18,16 +18,18 @@ Maintained at closure — refreshed for whichever `.context/` file(s) changed ma
 
 | File | Section / heading | One-line summary | Last confirmed |
 |------|--------------------|-------------------|-----------------|
-| PROJECT_STATE.md | Current status | Green; third-party JS removed; smoke after engine cut still open | 2026-11-11 |
-| PROJECT_STATE.md | Active priorities | Smoke, CSP/DOM sinks, optional art | 2026-11-11 |
-| PROJECT_STATE.md | Risks / blockers | Tiny placeholder PNGs; engine cut unsmoked | 2026-11-11 |
-| TODO.md | Now | Browser smoke after engine cut | 2026-11-11 |
-| TODO.md | Next | Optional PNG art upgrade | 2026-11-11 |
-| RECENT_CHANGES.md | 2026-11-11: Drop jaws / Filtrr2 / jQuery | First-party `engine.js`; deleted abandoned libs | 2026-11-11 |
+| PROJECT_STATE.md | Current status | Green; hybrid art accepted, uncommitted; `2ae3778` shipped | 2026-11-12 |
+| PROJECT_STATE.md | Active priorities | CSP/DOM sinks; optional exit walk; commit art | 2026-11-11 |
+| PROJECT_STATE.md | Risks / blockers | (none active) | 2026-11-11 |
+| TODO.md | Now | (none) | 2026-11-11 |
+| TODO.md | Next | Optional exit SUCCESS walk | 2026-11-11 |
+| RECENT_CHANGES.md | 2026-11-11: Hybrid art | 64×64 dino + pixel `camera.svg` (LCD hole) | 2026-11-12 |
+| RECENT_CHANGES.md | 2026-11-11: Drop jaws / Filtrr2 / jQuery | First-party `engine.js`; smoked + shipped `2ae3778` | 2026-11-11 |
 | RECENT_CHANGES.md | 2026-11-10: QA triage fixes | Controls/HUD/camera/canvas fixes from triage-summary | 2026-11-11 |
+| DECISIONS.md | 2026-11-11: Hybrid art | PNG dino + pixel SVG camera (transparent LCD) | 2026-11-12 |
 | DECISIONS.md | 2026-11-11: Replace jaws / Filtrr2 / jQuery | `engine.js` replaces abandoned stack; keeps gameplay flow | 2026-11-11 |
-| ARCHITECTURE.md | Repository layout | Levels + `engine.js` + `fit.js`; no third-party JS | 2026-11-11 |
-| PROJECT_FRONTMATTER.md | Map | Path → one-line role for Level1/2, engine, fit, context | 2026-11-11 |
+| ARCHITECTURE.md | Repository layout | Levels + `camera.svg` + `engine.js` + `fit.js` | 2026-11-11 |
+| PROJECT_FRONTMATTER.md | Map | Path → one-line role; includes `camera.svg` | 2026-11-11 |
 | DECISIONS.md | 2026-11-10: Match maze canvas bitmap… | Canvas 600×300 FOV-preserving; screenshot polaroid 300×150 | 2026-11-11 |
 | DECISIONS.md | 2026-11-10: Scale the layout block… | `fit.js` scales `#titleBlock` for viewport fit | 2026-11-11 |
 | DECISIONS.md | 2026-11-10: Keep jQuery for Filtrr2… — superseded | Historical; replaced by `engine.js` sepia | 2026-11-11 |
