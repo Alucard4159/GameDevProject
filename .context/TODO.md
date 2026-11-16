@@ -16,6 +16,7 @@
 
 ## Done recently (optional short list)
 
+- [x] Level 3: serpentine map, teal palette, spawn BL / exit TR `(14,1)`; L2 dual nav; SUCCESS smoked (path 31)
 - [x] In-browser SUCCESS HUD: L1+L2 exit cell via `Math.floor` (2026-11-16); paths exist (37/33); HUD showed SUCCESS! + 100%
 - [x] Hybrid art: 64×64 `dino.png` + pixel-faithful `camera.svg` (transparent LCD); user accepted 2026-11-12
 - [x] Commit/push engine cut (`2ae3778` on `origin/main`)

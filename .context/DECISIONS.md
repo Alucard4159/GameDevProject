@@ -2,6 +2,14 @@
 
 Newest first. Capture what was decided and why.
 
+## 2026-11-16: Level 3 as copy-edit, not a shared game framework
+
+**Decision**: Add `Level3/` by copying Level 2’s page/script/CSS/dino pattern (same `engine.js` / `camera.svg`). Give it a serpentine map, teal palette, spawn `(1.5,14.5)`, exit `(14,1)`, and dual nav on Level 2 (Previous + Next). Do **not** extract a shared `game-core.js` yet.
+
+**Rationale**: User wanted more content. Three near-clone levels are acceptable for this static college project; a shared framework is only worth it at Level 4+.
+
+**Tradeoff**: Continued duplication across `game.js` / `game2.js` / `game3.js`. Exit/percent math is per-level (L3 targets `(14,1)`).
+
 ## 2026-11-16: SUCCESS HUD verification method — path proof + exit-entry walk
 
 **Decision**: Treat the SUCCESS/`Math.floor` smoke gap as closed when (1) BFS shows an open-cell path from spawn `(14,14)` to exit `(1,1)` and (2) the player enters `(1,1)` through real `player.move()` so the SUCCESS HUD branch runs. Do **not** require a full corridor keyboard auto-walk for the gate. Method used: place at pre-exit cell center, drive in via `Engine.pressed` override; confirm HUD `SUCCESS!` + `100%` on L1 and L2.

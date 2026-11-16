@@ -18,7 +18,8 @@ Refresh when top-level layout changes (see `ARCHITECTURE.md`).
 |------|------------|
 | `Level1/` | Level 1 page: `index.html`, `game.js`, `game.css`, `dino.png` |
 | `Level2/` | Level 2 page: `index.html`, `game2.js`, `game2.css`, matching assets |
-| `camera.svg` | Shared HUD camera chrome (both levels via `../camera.svg`) |
+| `Level3/` | Level 3 page: `index.html`, `game3.js`, `game3.css`, `dino.png` (teal / serpentine) |
+| `camera.svg` | Shared HUD camera chrome (levels via `../camera.svg`) |
 | `engine.js` | First-party runtime: assets, rAF loop, keys, sprite, sepia |
 | `fit.js` | Scales `#titleBlock` to the viewport |
 | `.context/` | Handoff, decisions, pack-configs, triage summary |

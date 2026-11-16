@@ -6,18 +6,18 @@ Last updated: 2026-11-16
 
 ## What this project does
 
-- College HTML5 maze game ("Jessie's Maze Deluxe"): two levels of client-side raycasting with a minimap, HUD, screenshot/sepia filter, and level navigation. Static files only — no backend.
+- College HTML5 maze game ("Jessie's Maze Deluxe"): three levels of client-side raycasting with a minimap, HUD, screenshot/sepia filter, and level navigation. Static files only — no backend.
 
 ## Current status
 
 - Phase: maintenance
-- Overall: green — first-party `engine.js`; hybrid art shipped; SUCCESS HUD confirmed in-browser on L1+L2 (2026-11-16).
-- Latest shipped: `04814c5` on `origin/main` (hybrid art). Exit SUCCESS walk verified locally (not a separate commit).
+- Overall: green — first-party `engine.js`; hybrid art shipped; Level 3 added (local/uncommitted); SUCCESS confirmed L1–L3.
+- Latest shipped: `ce60e15` on `origin/main` (SUCCESS HUD context). Level 3 not pushed yet.
 
 ## Active priorities
 
 - P1: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
-- P2: (none — backlog clear)
+- P2: Commit/push Level 3 when ready
 
 ## Deployment Environments
 

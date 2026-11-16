@@ -1,0 +1,126 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #111;
+  overflow: hidden;
+}
+
+#canvas{
+    position:absolute;
+    width:600px;
+    height:300px;
+    z-index:1;
+    border: 10px dashed black;
+  }
+  #minimap{
+    border:10px dashed black;
+    position:absolute;
+    left:620px;
+    width:300px;
+    height:300px;
+  }
+  #screenshot-wrapper{
+    position:absolute;
+    top:365px;
+    border: 10px dashed black;
+    background-color: gray;
+  }
+  #camera{
+    width:100px;
+    height:auto;
+    position:absolute; 
+    z-index:1;
+    left:505px;
+    top:240px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  #screenshot{
+    background-color: white;
+    width: 300px;
+    height: 150px;
+  }
+  
+  #titleBlock{
+    background-color: gray;
+    position:relative;
+    width: 940px;
+    height:582px;
+  }
+
+  #HUD{
+    background-image: -webkit-linear-gradient(left, #0a6e6a 0%,#000000 100%);
+    color: white;
+    position:relative;
+    display: flex;
+    align-items: center;
+    width: 940px;
+    height:55px;
+  }
+
+  #HUD h2{
+    margin: 0;
+  }
+
+  #HUD p{
+    color: #b8f4e8;
+    margin: 0;
+  }
+
+  #HUD .hud-x{
+    padding-left: 240px;
+  }
+
+  #HUD .hud-stat{
+    padding-left: 30px;
+  }
+
+  #HUD .hud-value{
+    color: white;
+  }
+
+  #HUD .hud-success{
+    color: #7dffb3;
+  }
+
+  #instructions{
+    background-image: -webkit-radial-gradient(center, #0a6e6a 0%,#000000 100%);
+    text-align: center;
+    font-family:'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+    position:absolute;
+    top:375px;
+    left:320px;
+    width: 615px;
+    height: 165px;
+    border: 2px solid black;
+  }
+
+  .levelNav {
+    position:absolute;
+    top: 535px;
+    left: 0;
+    width: 941px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .navLevel {
+    flex: 1;
+    display: block;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    outline: none;
+    background-image:
+        -webkit-linear-gradient(top,#034e4a 0%,#0a6e6a 100%);
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  .navLevel:hover {
+    background-image: none;
+    background-color: #555;
+  }

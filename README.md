@@ -15,4 +15,4 @@ Then open `/Level1/` or `/Level2/`.
 - `engine.js` — game loop, input, sprite, sepia (replaces old jaws / Filtrr2 / jQuery)
 - `fit.js` — scales the UI block to the window
 - `camera.svg` — shared HUD camera chrome
-- `Level1/`, `Level2/` — page, game script, CSS, `dino.png`
+- `Level1/`, `Level2/`, `Level3/` — page, game script, CSS, `dino.png`

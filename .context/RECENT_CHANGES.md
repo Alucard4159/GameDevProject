@@ -4,6 +4,17 @@
 
 Reverse chronological log of notable implementation and operational changes.
 
+## 2026-11-16: Add Level 3 (serpentine map + teal theme)
+
+- What changed:
+  - New `Level3/` (`index.html`, `game3.js`, `game3.css`, `dino.png`) on shared `engine.js` / `camera.svg`
+  - Serpentine map; spawn `(1.5,14.5)` facing east; exit `(14,1)`; teal HUD/sky/walls
+  - Level 2 footer: Previous → L1 and Next → L3
+  - SUCCESS smoked (BFS path length 31; exit-entry via `player.move`)
+- Why: User asked for a new level with real differences, not a reskin
+- Impact: Three-level chain; still copy-edit duplication (no shared game-core)
+- Follow-ups: Commit/push when ready
+
 ## 2026-11-16: Confirm SUCCESS HUD at exit (L1 + L2)
 
 - What changed: In-browser verification only (no gameplay code change). BFS open-cell paths exist from spawn (14,14) → exit (1,1) — L1 length 37, L2 length 33. Placed at pre-exit cell then drove into (1,1) through real `player.move()` / `Engine.pressed` so `Math.floor` SUCCESS branch fired. HUD evidence: `SUCCESS!` + `Percentage Completed- 100%` on both levels (a11y + screenshot L1).

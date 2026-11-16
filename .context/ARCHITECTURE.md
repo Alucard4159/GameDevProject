@@ -7,6 +7,7 @@
 ```text
 Level1/          Level 1 page, game.js, CSS, dino.png
 Level2/          Level 2 page, game2.js, CSS, dino.png
+Level3/          Level 3 page, game3.js, CSS, dino.png
 camera.svg       Shared HUD camera chrome
 engine.js        Shared runtime: assets, rAF loop, keys, sprite, sepia
 fit.js           Scales #titleBlock to the viewport on load/resize
@@ -20,7 +21,7 @@ scripts/         sync_manual_skill_routing.py
 
 - Component: Raycaster game loop
   - Responsibility: Cast rays, draw wall slivers, move player, HUD/instructions
-  - Key files: `Level1/game.js`, `Level2/game2.js`
+  - Key files: `Level1/game.js`, `Level2/game2.js`, `Level3/game3.js`
   - Inputs/outputs: Keyboard via `Engine.pressed`; canvas + minimap + screenshot canvas
 
 - Component: Engine runtime

@@ -18,12 +18,14 @@ Maintained at closure — refreshed for whichever `.context/` file(s) changed ma
 
 | File | Section / heading | One-line summary | Last confirmed |
 |------|--------------------|-------------------|-----------------|
-| PROJECT_STATE.md | Current status | Green; hybrid art + SUCCESS HUD verified; `04814c5` | 2026-11-16 |
-| PROJECT_STATE.md | Active priorities | CSP/DOM sinks only | 2026-11-16 |
+| PROJECT_STATE.md | Current status | Green; Level 3 local; SUCCESS L1–L3; `ce60e15` | 2026-11-16 |
+| PROJECT_STATE.md | Active priorities | CSP/DOM; commit Level 3 | 2026-11-16 |
 | PROJECT_STATE.md | Risks / blockers | (none active) | 2026-11-11 |
 | TODO.md | Now | (none) | 2026-11-16 |
 | TODO.md | Next | (none) | 2026-11-16 |
+| RECENT_CHANGES.md | 2026-11-16: Add Level 3 | Serpentine map, teal theme, L2 dual nav | 2026-11-16 |
 | RECENT_CHANGES.md | 2026-11-16: Confirm SUCCESS HUD | L1+L2 exit via Math.floor; SUCCESS! 100% | 2026-11-16 |
+| DECISIONS.md | 2026-11-16: Level 3 as copy-edit | No shared game-core until Level 4+ | 2026-11-16 |
 | RECENT_CHANGES.md | 2026-11-11: Hybrid art | 64×64 dino + pixel `camera.svg` (LCD hole) | 2026-11-12 |
 | RECENT_CHANGES.md | 2026-11-11: Drop jaws / Filtrr2 / jQuery | First-party `engine.js`; smoked + shipped `2ae3778` | 2026-11-11 |
 | RECENT_CHANGES.md | 2026-11-10: QA triage fixes | Controls/HUD/camera/canvas fixes from triage-summary | 2026-11-11 |

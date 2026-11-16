@@ -97,12 +97,18 @@ html, body {
     border: 2px solid black;
   }
 
-  .nextLevel {
-    display: inherit;
+  .levelNav {
     position:absolute;
     top: 535px;
-    width: 911px;
-    height:15px;
+    left: 0;
+    width: 941px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .navLevel {
+    flex: 1;
+    display: block;
     font-size: 18px;
     text-align: center;
     border: none;
@@ -113,8 +119,9 @@ html, body {
     cursor: pointer;
     padding: 15px;
     border-radius: 4px;
-}
-.nextLevel:hover {
+    text-decoration: none;
+  }
+  .navLevel:hover {
     background-image: none;
     background-color: #555;
-}
+  }
