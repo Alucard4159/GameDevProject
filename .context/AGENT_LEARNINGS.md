@@ -2,6 +2,10 @@
 
 > **Context Safety:** Redact sensitive values. No secrets in this file.
 
+## 2026-11-16
+
+- Exit SUCCESS smoke: BFS path length + enter `(1,1)` via real `player.move()` is enough; full corridor auto-walk stalls on corners and is a different problem
+
 ## 2026-11-11
 
 - Movement must poll-reset `direction`/`speed` each frame — key state is cleared on blur without synthetic keyup; latches stick if you only clear on keyup

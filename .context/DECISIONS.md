@@ -2,6 +2,14 @@
 
 Newest first. Capture what was decided and why.
 
+## 2026-11-16: SUCCESS HUD verification method — path proof + exit-entry walk
+
+**Decision**: Treat the SUCCESS/`Math.floor` smoke gap as closed when (1) BFS shows an open-cell path from spawn `(14,14)` to exit `(1,1)` and (2) the player enters `(1,1)` through real `player.move()` so the SUCCESS HUD branch runs. Do **not** require a full corridor keyboard auto-walk for the gate. Method used: place at pre-exit cell center, drive in via `Engine.pressed` override; confirm HUD `SUCCESS!` + `100%` on L1 and L2.
+
+**Rationale**: The triage risk was specifically the exit cell check (`Math.floor`), not pathfinding QA. Full auto-walk stalls on narrow corner geometry; that does not invalidate the SUCCESS branch. Path length (L1 37 / L2 33) still proves reachability without shipping a solver.
+
+**Tradeoff**: Does not prove a human (or bot) can clear the whole maze without getting stuck on corners. Adequate for the documented backlog item; a dedicated maze-runner would be separate work.
+
 ## 2026-11-11: Hybrid art — 64×64 PNG dino + shared SVG camera
 
 **Decision**: Keep the in-maze dino as a real bitmap (`Level1|2/dino.png` at 64×64 with transparency) loaded via `Engine.Sprite`. Replace decorative `#camera` chrome with a shared root `camera.svg` referenced as `../camera.svg`; delete per-level `camera.png`. **Settled (2026-11-12):** `camera.svg` is a crispEdges 16×16 pixel rebuild of the old PNG — black camcorder *back*, peach arm stub, red REC, and a **transparent LCD window** (cols 1–5 / rows 8–10) so the maze shows through as the player moves. CSS uses `image-rendering: pixelated`. Earlier cartoon “front camera + detailed hand” SVG passes are abandoned.

@@ -4,6 +4,13 @@
 
 Reverse chronological log of notable implementation and operational changes.
 
+## 2026-11-16: Confirm SUCCESS HUD at exit (L1 + L2)
+
+- What changed: In-browser verification only (no gameplay code change). BFS open-cell paths exist from spawn (14,14) → exit (1,1) — L1 length 37, L2 length 33. Placed at pre-exit cell then drove into (1,1) through real `player.move()` / `Engine.pressed` so `Math.floor` SUCCESS branch fired. HUD evidence: `SUCCESS!` + `Percentage Completed- 100%` on both levels (a11y + screenshot L1).
+- Why: Close the leftover smoke gap — timed smoke never reached the exit cell
+- Impact: Exit/`Math.floor` SUCCESS path confirmed live; backlog item cleared
+- Follow-ups: none
+
 ## 2026-11-11: Hybrid art (64×64 dino PNG + SVG camera)
 
 - What changed:
@@ -14,7 +21,7 @@ Reverse chronological log of notable implementation and operational changes.
   - 2026-11-12: abandoned cartoon grip SVGs; rebuilt `camera.svg` as pixel-faithful 16×16 of old PNG (transparent LCD hole + peach arm); `#camera` CSS `image-rendering: pixelated`
 - Why: User chose hybrid — PNG dino + SVG camera; original camera’s “screen” is a transparency window over the maze, which illustrated fronts broke
 - Impact: Sharper dino; camera matches old HUD read with live LCD; no gameplay JS changes
-- Follow-ups: ~~Art acceptance~~ (user preferred sharp pixel SVG over blurry old upscale despite clipped arm); commit/push when ready
+- Follow-ups: ~~Art acceptance~~; ~~commit/push~~ (`04814c5` on `origin/main`)
 
 ## 2026-11-11: Drop jaws / Filtrr2 / jQuery for first-party engine
 

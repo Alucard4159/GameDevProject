@@ -2,7 +2,7 @@
 
 > **Context Safety:** Redact sensitive values. No secrets in this file.
 
-Last updated: 2026-11-12
+Last updated: 2026-11-16
 
 ## What this project does
 
@@ -11,14 +11,13 @@ Last updated: 2026-11-12
 ## Current status
 
 - Phase: maintenance
-- Overall: green — first-party `engine.js`; hybrid art accepted (64×64 dino PNGs + pixel-faithful `camera.svg` with transparent LCD). Engine-cut smoke passed 2026-11-11; camera settled/accepted 2026-11-12.
-- Latest shipped: `2ae3778` on `origin/main` (engine cut + context/README). Art upgrade accepted, still local/uncommitted.
+- Overall: green — first-party `engine.js`; hybrid art shipped; SUCCESS HUD confirmed in-browser on L1+L2 (2026-11-16).
+- Latest shipped: `04814c5` on `origin/main` (hybrid art). Exit SUCCESS walk verified locally (not a separate commit).
 
 ## Active priorities
 
 - P1: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
-- P2: Optional in-browser walk to exit for SUCCESS HUD confirmation
-- P3: Commit/push hybrid art when ready
+- P2: (none — backlog clear)
 
 ## Deployment Environments
 

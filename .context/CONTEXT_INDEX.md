@@ -18,15 +18,18 @@ Maintained at closure — refreshed for whichever `.context/` file(s) changed ma
 
 | File | Section / heading | One-line summary | Last confirmed |
 |------|--------------------|-------------------|-----------------|
-| PROJECT_STATE.md | Current status | Green; hybrid art accepted, uncommitted; `2ae3778` shipped | 2026-11-12 |
-| PROJECT_STATE.md | Active priorities | CSP/DOM sinks; optional exit walk; commit art | 2026-11-11 |
+| PROJECT_STATE.md | Current status | Green; hybrid art + SUCCESS HUD verified; `04814c5` | 2026-11-16 |
+| PROJECT_STATE.md | Active priorities | CSP/DOM sinks only | 2026-11-16 |
 | PROJECT_STATE.md | Risks / blockers | (none active) | 2026-11-11 |
-| TODO.md | Now | (none) | 2026-11-11 |
-| TODO.md | Next | Optional exit SUCCESS walk | 2026-11-11 |
+| TODO.md | Now | (none) | 2026-11-16 |
+| TODO.md | Next | (none) | 2026-11-16 |
+| RECENT_CHANGES.md | 2026-11-16: Confirm SUCCESS HUD | L1+L2 exit via Math.floor; SUCCESS! 100% | 2026-11-16 |
 | RECENT_CHANGES.md | 2026-11-11: Hybrid art | 64×64 dino + pixel `camera.svg` (LCD hole) | 2026-11-12 |
 | RECENT_CHANGES.md | 2026-11-11: Drop jaws / Filtrr2 / jQuery | First-party `engine.js`; smoked + shipped `2ae3778` | 2026-11-11 |
 | RECENT_CHANGES.md | 2026-11-10: QA triage fixes | Controls/HUD/camera/canvas fixes from triage-summary | 2026-11-11 |
+| DECISIONS.md | 2026-11-16: SUCCESS HUD verification method | Path proof + exit-entry walk; not full auto-maze | 2026-11-16 |
 | DECISIONS.md | 2026-11-11: Hybrid art | PNG dino + pixel SVG camera (transparent LCD) | 2026-11-12 |
+| AGENT_LEARNINGS.md | 2026-11-16 | Exit SUCCESS smoke vs full corridor auto-walk | 2026-11-16 |
 | DECISIONS.md | 2026-11-11: Replace jaws / Filtrr2 / jQuery | `engine.js` replaces abandoned stack; keeps gameplay flow | 2026-11-11 |
 | ARCHITECTURE.md | Repository layout | Levels + `camera.svg` + `engine.js` + `fit.js` | 2026-11-11 |
 | PROJECT_FRONTMATTER.md | Map | Path → one-line role; includes `camera.svg` | 2026-11-11 |
