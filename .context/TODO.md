@@ -8,7 +8,7 @@
 
 ## Next
 
-- (none)
+- [ ] Commit/push full QA batch: findings 1–6 + re-review (`atan2`, `vercel.json`, docs) + framing runner
 
 ## Blocked
 
@@ -16,7 +16,14 @@
 
 ## Done recently (optional short list)
 
-- [x] Level 3: serpentine map, teal palette, spawn BL / exit TR `(14,1)`; L2 dual nav; SUCCESS smoked (path 31)
+- [x] Re-review triage complete: `atan2` dino angle (L1–L3); framing residual via docs + `vercel.json`
+- [x] QA finding 6 fixed: framing via `serve.py` + `_headers` (meta CSP cannot)
+- [x] QA triage 2026-11-16 first pass — all 6 applied (archived); re-review summary active
+- [x] QA finding 5 fixed: axis-slide collision (L1–L3)
+- [x] QA finding 4 fixed: HUD X/Y use `Math.floor` (L1–L3)
+- [x] QA finding 3 fixed: screenshot/sepia race (`capturing` + onload reset) (L1–L3)
+- [x] QA findings 1–2 fixed: per-frame `dino.distance` + Euclidean wall occlusion (L1–L3)
+- [x] Level 3: serpentine map, teal palette, spawn BL / exit TR `(14,1)`; L2 dual nav; SUCCESS smoked; shipped `272e4c9`
 - [x] In-browser SUCCESS HUD: L1+L2 exit cell via `Math.floor` (2026-11-16); paths exist (37/33); HUD showed SUCCESS! + 100%
 - [x] Hybrid art: 64×64 `dino.png` + pixel-faithful `camera.svg` (transparent LCD); user accepted 2026-11-12
 - [x] Commit/push engine cut (`2ae3778` on `origin/main`)

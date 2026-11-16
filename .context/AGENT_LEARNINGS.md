@@ -17,4 +17,4 @@
 - (Historical, jaws removed 2026-11-11) jaws cleared key callbacks on state switch — if using `on_keyup`, register in `setup`, never in `update`. Movement now uses poll-reset in `Engine` key state (see 2026-11-11)
 - (Historical) Filtrr2 required jQuery; resolved by deleting both and using `Engine.sepia`
 - `fit.js` must stay a separate file so CSP can forbid inline scripts
-- On Windows, prefer `py -3 -m http.server` — bare `python` may hit the Store alias stub
+- On Windows use `py -3 serve.py` (not bare `python`, and not `http.server` — framing headers need `serve.py`)

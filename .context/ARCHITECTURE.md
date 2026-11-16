@@ -11,6 +11,9 @@ Level3/          Level 3 page, game3.js, CSS, dino.png
 camera.svg       Shared HUD camera chrome
 engine.js        Shared runtime: assets, rAF loop, keys, sprite, sepia
 fit.js           Scales #titleBlock to the viewport on load/resize
+serve.py         Local static server with framing headers
+_headers         Netlify / Cloudflare Pages framing headers
+vercel.json      Vercel framing headers
 .context/        Project handoff + pack-configs
 .cursor/         Cursor rules + hooks (bootstrapped)
 skills/          Project-local skills scaffold

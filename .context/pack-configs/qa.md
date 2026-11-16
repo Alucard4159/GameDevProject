@@ -10,7 +10,7 @@
 
 - Prefer UI / game-loop bug hunts over backend-contract skills
 - Primary surfaces: `Level1/game.js`, `Level2/game2.js`, `engine.js`, `fit.js`, both `index.html` + CSS
-- Browser verification via local static server (`py -3 -m http.server`)
+- Browser verification via `py -3 serve.py` (framing headers; do not use plain `http.server`)
 - No TypeScript — skip `typescript-review` unless `.ts` appears
 
 ## Constraints

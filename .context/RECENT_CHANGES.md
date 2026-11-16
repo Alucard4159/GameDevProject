@@ -4,6 +4,62 @@
 
 Reverse chronological log of notable implementation and operational changes.
 
+## 2026-11-16: Re-review triage — atan2 + framing residual
+
+- What changed: L1–L3 `dino.angle` → `Math.atan2`. Framing residual: README/pack-config/AGENT_LEARNINGS ban plain `http.server`; added `vercel.json` headers; triage-summary replaced (prior six-finding pass appended to archive).
+- Why: User Fix-it-now on both re-review findings
+- Impact: Dino bearing correct in all quadrants; more hosts + docs cover framing
+- Follow-ups: Commit full QA batch
+
+## 2026-11-16: `/qa-review-pipeline` re-review after triage fixes (report-only)
+
+- What changed: Re-ran TS N/A + bug-hunt + secrev + aggregate on full game surface post findings 1–6. Prior six verified still fixed. New High: dino angle `Math.atan(dy/dx)` wrong quadrant west-of-player — use `atan2`. Secrev: no Crit/High/Med; Low residual framing only if bypassing `serve.py` / `_headers`.
+- Why: User asked to review again after triage batch
+- Impact: Led to re-review triage (both findings fixed same day)
+- Follow-ups: (done) Fix-it-now on both
+
+## 2026-11-16: QA triage — framing headers (finding 6) + triage done
+
+- What changed: Added `serve.py` (DENY + `frame-ancestors 'none'`; smoke-verified), root `_headers` for Netlify/CF Pages, README Run → `py -3 serve.py`. Replaced `.context/triage-summary.md` with the 2026-11-16 six-finding session (all applied); prior 2026-11-10 eight-finding summary moved to `triage-summary_ARCHIVE.md`.
+- Why: User Fix-it-now on Low framing; meta CSP cannot set `frame-ancestors`
+- Impact: Documented local run and common static hosts send framing policy; triage batch complete pending commit
+- Follow-ups: Commit/push findings 1–6 + framing files
+
+## 2026-11-16: QA triage — axis-slide collision (finding 5)
+
+- What changed: L1–L3 `player.move` uses axis-slide (`newX`@old Y, then `newY`@maybe-new X); HUD/SUCCESS only if either axis moved
+- Why: User Fix-it-now — diagonal destination-only `containsBlock` allowed corner tunneling
+- Impact: No corner clip through walls; walls feel slidable
+- Follow-ups: Finding 6 (framing headers); commit with batch
+
+## 2026-11-16: QA triage — HUD coords use floor (finding 4)
+
+- What changed: L1–L3 HUD `Player.X` / `Player.Y` switched from `Math.ceil` to `Math.floor`; percent still `Math.ceil`
+- Why: User Fix-it-now — ceil disagreed with collision/SUCCESS cell for fractional positions
+- Impact: HUD cell labels match engine occupancy
+- Follow-ups: Continue triage (corner clip, framing); commit with batch
+
+## 2026-11-16: QA triage — fix screenshot/sepia race (finding 3)
+
+- What changed: L1–L3 camera `capturing` flag blocks polaroid clicks during async load; onload resets filter state after draw; onerror clears flag
+- Why: User Fix-it-now — Space then quick click could desync sepia restore vs new photo
+- Impact: Polaroid toggle stays consistent with the displayed capture
+- Follow-ups: Continue triage (HUD ceil, corner clip, framing); commit with batch
+
+## 2026-11-16: QA triage — fix dino occlusion (findings 1–2)
+
+- What changed: L1–L3 `castRays` now sets `dino.distance` once per frame from player↔dino; wall fg/bg uses Euclidean `distance` vs dino (fish-eye `adjustedDistance` still for height/shade only)
+- Why: User Fix-it-now on re-investigated stale-distance bug and metric-mismatch bug
+- Impact: Correcter dino↔wall layering; finding 3 also fixed same session
+- Follow-ups: Continue triage; commit with batch
+
+## 2026-11-16: `/qa-review-pipeline` on full game surface (report-only)
+
+- What changed: Ran typescript N/A + bug-hunt + secrev + aggregate on engine/fit + Level1–3. Five High-confidence bugs (stale dino.distance; adjustedDistance vs Euclidean occlusion; screenshot/sepia race; HUD Math.ceil vs floor; corner clip). Secrev: one Low missing frame-ancestors/X-Frame-Options. No code fixes yet — triage offered.
+- Why: Post–Level 3 repo review
+- Impact: Backlog reopened for triage; ship still green
+- Follow-ups: User accept/reject triage; then fix or defer
+
 ## 2026-11-16: Add Level 3 (serpentine map + teal theme)
 
 - What changed:
@@ -13,7 +69,7 @@ Reverse chronological log of notable implementation and operational changes.
   - SUCCESS smoked (BFS path length 31; exit-entry via `player.move`)
 - Why: User asked for a new level with real differences, not a reskin
 - Impact: Three-level chain; still copy-edit duplication (no shared game-core)
-- Follow-ups: Commit/push when ready
+- Follow-ups: ~~Commit/push~~ (`272e4c9` on `origin/main`)
 
 ## 2026-11-16: Confirm SUCCESS HUD at exit (L1 + L2)
 

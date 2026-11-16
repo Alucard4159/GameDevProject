@@ -2,6 +2,62 @@
 
 Newest first. Capture what was decided and why.
 
+## 2026-11-16: Framing residual — ban http.server in docs + add vercel.json
+
+**Decision**: Treat plain `http.server` as unsupported for this project in README + `pack-configs/qa.md` + `AGENT_LEARNINGS`. Keep `serve.py` / `_headers`; add `vercel.json` with the same `X-Frame-Options: DENY` and `frame-ancestors 'none'`. Still no meta CSP `frame-ancestors`.
+
+**Rationale**: Re-review Low finding — residual framing when bypassing the documented runner. User chose Fix-it-now; killing stale `http.server` pointers removes the main footgun, and `vercel.json` covers another common static host without inventing GitHub Pages Actions yet.
+
+**Tradeoff**: Hosts that ignore both `_headers` and `vercel.json` still need their own config. Docs cannot stop someone from running `http.server` anyway.
+
+## 2026-11-16: Dino bearing — Math.atan2, not Math.atan
+
+**Decision**: Set `dino.angle` with `Math.atan2(dinoDistanceY, dinoDistanceX) - player.angle` in Level1–3.
+
+**Rationale**: Re-review High bug — `atan(dy/dx)` collapses the left half-plane, so the dino sprite X is wrong when west of the player. User chose Fix-it-now in triage.
+
+**Tradeoff**: None meaningful; `atan2` is the correct 2-arg bearing API.
+
+## 2026-11-16: Framing headers via serve.py + _headers, not meta CSP
+
+**Decision**: Add `serve.py` (stdlib server that sends `X-Frame-Options: DENY` and `Content-Security-Policy: frame-ancestors 'none'`) as the documented local runner, plus root `_headers` for Netlify/Cloudflare Pages. Do **not** put `frame-ancestors` on the existing meta CSP. Leave meta CSP otherwise unchanged.
+
+**Rationale**: QA finding 6 (Low) — browsers ignore `frame-ancestors` in meta CSP; plain `http.server` can’t set response headers. User chose Fix-it-now; this closes framing for the actual Run path and common static hosts without inventing a fake meta fix.
+
+**Tradeoff**: `py -3 -m http.server` still serves without framing headers if someone ignores the README. No GitHub Pages / S3 header file unless that host is adopted later.
+
+## 2026-11-16: Movement collision — axis-slide, not diagonal point sample
+
+**Decision**: In `player.move`, try X at old Y then Y at (possibly new) X via `containsBlock`; set position per axis that clears. Run SUCCESS/HUD only when `moved`. Applied in Level1–3. No collision radius / segment DDA.
+
+**Rationale**: QA finding 5 — single `(newX, newY)` sample let diagonal steps tunnel past wall corners. User chose Fix-it-now; axis-slide is the cheapest classic FPS fix and also enables wall-slide feel.
+
+**Tradeoff**: Still a zero-radius point player. Very fast steps could skip thin walls; current `movementSpeed = 0.1` makes that unlikely on this 16×16 grid.
+
+## 2026-11-16: HUD player coords — Math.floor, not Math.ceil
+
+**Decision**: HUD `Player.X` / `Player.Y` display `Math.floor(this.x/y)`, matching `containsBlock` and SUCCESS. Leave `Math.ceil(percentComplete)` as-is. Applied in Level1–3.
+
+**Rationale**: QA finding 4 — ceil showed the cell east/south of the engine cell for any fractional position (entire exit cell could show `2,2` while SUCCESS fired). User chose Fix-it-now in triage; floor aligns readout with collision semantics.
+
+**Tradeoff**: Still integer cell labels, not decimals. Percent rounding is a separate display choice and was out of scope for this finding.
+
+## 2026-11-16: Screenshot sepia — block clicks while capturing; reset filter on load
+
+**Decision**: Add a `capturing` flag around `takePicture`’s async Image load; ignore polaroid clicks while true. On successful `onload` (and matching generation), redraw then force `filtered = false` / `originalPixels = null` / `capturing = false`. `onerror` clears `capturing` only. Applied in Level1–3.
+
+**Rationale**: QA finding 3 — clearing filter state at Space then painting later left a window where click could sepia the old bitmap and leave restore state pointing at the wrong ImageData. User chose Fix-it-now in triage.
+
+**Tradeoff**: Clicks during capture are no-ops (no queue UI). Stale `onload` from an older generation still returns early without touching `capturing`; the newer capture owns the flag.
+
+## 2026-11-16: Dino occlusion — per-frame Euclidean distance + Euclidean wall compare
+
+**Decision**: (1) At the start of each `castRays`, set `dino.distance` from current player↔dino geometry (do not rely on mid-loop refresh after `show`). (2) Classify wall slivers with raw Euclidean wall `distance` vs `dino.distance`; keep fish-eye `adjustedDistance` only for wall height/shade. Applied in Level1–3.
+
+**Rationale**: QA finding 1 — distance was stale for rays before the dino cell was rediscovered. QA finding 2 — comparing fish-eye-corrected wall depth to Euclidean dino depth mis-ordered FOV-edge columns. User chose Fix-it-now on both in triage.
+
+**Tradeoff**: Still duplicate edits across three game scripts. Mid-loop distance write remains for `dino.angle` / scale path; occlusion no longer depends on it.
+
 ## 2026-11-16: Level 3 as copy-edit, not a shared game framework
 
 **Decision**: Add `Level3/` by copying Level 2’s page/script/CSS/dino pattern (same `engine.js` / `camera.svg`). Give it a serpentine map, teal palette, spawn `(1.5,14.5)`, exit `(14,1)`, and dual nav on Level 2 (Previous + Next). Do **not** extract a shared `game-core.js` yet.

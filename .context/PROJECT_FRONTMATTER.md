@@ -22,6 +22,9 @@ Refresh when top-level layout changes (see `ARCHITECTURE.md`).
 | `camera.svg` | Shared HUD camera chrome (levels via `../camera.svg`) |
 | `engine.js` | First-party runtime: assets, rAF loop, keys, sprite, sepia |
 | `fit.js` | Scales `#titleBlock` to the viewport |
+| `serve.py` | Local static server with `X-Frame-Options` / `frame-ancestors` |
+| `_headers` | Same framing headers for Netlify / Cloudflare Pages |
+| `vercel.json` | Framing headers for Vercel |
 | `.context/` | Handoff, decisions, pack-configs, triage summary |
 | `.cursor/` | Cursor rules and hooks |
 | `skills/` | Project-local skills scaffold |

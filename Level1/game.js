@@ -12,6 +12,9 @@ var Game = function(){
           backgroundSlivers = [];
           minimap.rays = [];
           dino.show = false;
+          var dinoDx = dino.x + 0.5 - player.x;
+          var dinoDy = dino.y + 0.5 - player.y;
+          dino.distance = Math.sqrt(dinoDx * dinoDx + dinoDy * dinoDy);
           for (var i=0;i<numberOfRays;i++) {
             var rayNumber = -numberOfRays/2 + i;
             var rayAngle = angleBetweenRays * rayNumber + player.angle;
@@ -83,7 +86,7 @@ var Game = function(){
           if(dino.show === true){
             var dinoDistanceX = dino.x + .5 - player.x;
             var dinoDistanceY = dino.y + .5 - player.y;
-            dino.angle = Math.atan(dinoDistanceY/dinoDistanceX) - player.angle;
+            dino.angle = Math.atan2(dinoDistanceY, dinoDistanceX) - player.angle;
             dino.distance = Math.sqrt(dinoDistanceX*dinoDistanceX + dinoDistanceY * dinoDistanceY);
           };
           minimap.rays.push([xHit, yHit]);
@@ -97,7 +100,7 @@ var Game = function(){
           if (shade < 0) shade = 0;
           if (shade >= palette.shades) shade = palette.shades - 1;
           var color = palette.walls[wallType][shade];
-          if(adjustedDistance < dino.distance){
+          if(distance < dino.distance){
             foregroundSlivers.push([i, wallTop, wallBottom, color]);
           }else{
             backgroundSlivers.push([i, wallTop, wallBottom, color]);
@@ -119,9 +122,10 @@ var Game = function(){
           this.angle += this.direction * this.turnSpeed;
           var newX = this.x + Math.cos(this.angle) * moveStep;
           var newY = this.y + Math.sin(this.angle) * moveStep;
-          if (!containsBlock(newX, newY)){
-            this.x = newX;
-            this.y = newY;
+          var moved = false;
+          if (!containsBlock(newX, this.y)) { this.x = newX; moved = true; }
+          if (!containsBlock(this.x, newY)) { this.y = newY; moved = true; }
+          if (moved){
             if(Math.floor(this.x) === 1 && Math.floor(this.y) === 1)
             {
               setHud("Jessie's Maze Deluxe Level 1", [
@@ -139,8 +143,8 @@ var Game = function(){
               if (percentComplete < 0) percentComplete = 0;
               if (percentComplete > 100) percentComplete = 100;
               setHud("Jessie's Maze Deluxe Level 1", [
-                { className: "hud-x", label: "Player.X- ", value: String(Math.ceil(this.x)) },
-                { className: "hud-stat", label: "Player.Y- ", value: String(Math.ceil(this.y)) },
+                { className: "hud-x", label: "Player.X- ", value: String(Math.floor(this.x)) },
+                { className: "hud-stat", label: "Player.Y- ", value: String(Math.floor(this.y)) },
                 { className: "hud-stat", label: "Percentage Completed- ", value: Math.ceil(percentComplete) + "%" }
               ]);
 
@@ -306,7 +310,9 @@ var Game = function(){
         var filtered = false;
         var originalPixels = null;
         var pictureGeneration = 0;
+        var capturing = false;
         shot.addEventListener("click", function() {
+          if (capturing) return;
           if (filtered) {
             filtered = false;
             Engine.restore(camera.context, originalPixels);
@@ -319,12 +325,20 @@ var Game = function(){
         this.takePicture = function(){
           filtered = false;
           originalPixels = null;
+          capturing = true;
           var generation = ++pictureGeneration;
           var image = new Image();
           image.onload = function() {
              if (generation !== pictureGeneration) return;
              camera.context.clearRect(0, 0, shot.width, shot.height);
              camera.context.drawImage(image, 0, 0, shot.width, shot.height);
+             filtered = false;
+             originalPixels = null;
+             capturing = false;
+          };
+          image.onerror = function() {
+             if (generation !== pictureGeneration) return;
+             capturing = false;
           };
           image.src = canvas.element.toDataURL('image/png');
         }
@@ -408,7 +422,7 @@ var Game = function(){
       palette.init();
       raycaster.init();
       dino.init();
-      fillInstructions("My Maze Deluxe Level 1");
+      fillInstructions("Jessie's Maze Deluxe Level 1");
     };
     this.update = function(){
       raycaster.castRays();

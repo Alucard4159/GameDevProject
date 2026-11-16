@@ -11,17 +11,17 @@ Last updated: 2026-11-16
 ## Current status
 
 - Phase: maintenance
-- Overall: green — first-party `engine.js`; hybrid art shipped; Level 3 added (local/uncommitted); SUCCESS confirmed L1–L3.
-- Latest shipped: `ce60e15` on `origin/main` (SUCCESS HUD context). Level 3 not pushed yet.
+- Overall: green for ship — Level 3 on `272e4c9`. QA triage + re-review complete locally (uncommitted): findings 1–6, `atan2` dino angle, framing via `serve.py` / `_headers` / `vercel.json`.
+- Latest shipped: `272e4c9` on `origin/main` (Level 3 serpentine/teal + L2 dual nav).
 
 ## Active priorities
 
-- P1: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
-- P2: Commit/push Level 3 when ready
+- P1: Commit/push full QA + framing batch
+- P2: Keep HUD/instructions DOM-built (no string HTML sinks) and CSP intact
 
 ## Deployment Environments
 
-- Local static hosting only (`py -3 -m http.server` or equivalent). No staging/prod deploy pipeline.
+- Local: `py -3 serve.py` (not plain `http.server`). Deploy headers: `_headers` (Netlify/CF Pages), `vercel.json` (Vercel). No staging/prod pipeline.
 
 ## Environment notes (safe only)
 
